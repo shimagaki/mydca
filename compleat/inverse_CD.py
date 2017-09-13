@@ -173,7 +173,7 @@ def J_data_init():
         del item[-1] 
         J_data_vec.append(map(float, item)[0]) 
         i += 1
-    J_data = np.reshape( np.copy(J_data_vec), (q**2,L**2) )
+    J_data = np.reshape( np.copy(J_data_vec), (L**2,q**2) )
     fin.close()
 
 if __name__ == "__main__":
