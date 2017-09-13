@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import time 
-q, L = 2, 8 
+L,q =  8,2 
 #----------#
 A = []
 Psi = np.zeros((L*L,q*q))
@@ -147,7 +147,7 @@ def visualize_estimator():
 def outputestimator():
     fname = "J_model_estimator__L"+str(L)+".dat"
     f = open(fname, "w")
-    J_model_vec = np.reshape( np.copy(J), q**2*L**2)
+    J_model_vec = np.reshape( np.copy(J), L**2*q**2)
     for l in range(len(J_model_vec)):
         f.write(str(J_model_vec[l])+" \n")
     f.close()
@@ -166,7 +166,7 @@ def J_data_init():
         del item[-1] 
         J_data_vec.append(map(float, item)[0]) 
         i += 1
-    J_data = np.reshape( np.copy(J_data_vec), (q**2,L**2) )
+    J_data = np.reshape( np.copy(J_data_vec), (L**2,q**2))
     fin.close()
 
 if __name__ == "__main__":

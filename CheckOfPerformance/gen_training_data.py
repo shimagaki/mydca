@@ -92,5 +92,3 @@ if __name__ == "__main__":
     fout.close() 
     #Engy /= N_sampling 
     #print "Engy=", Engy
-
-
