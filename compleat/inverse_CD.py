@@ -22,6 +22,9 @@ T_relax = 100
 M = 300 # number of sample of average by statistical model. 
 eps = 0.05
 lr = 0.2 
+#----------#
+K = 1 # CD_k
+#----------------------------------#
 def J_simple_potts():
     global J_data
     for i in range(L):
@@ -95,24 +98,28 @@ def average():
     Psi = Psi / l
     fin.close()
 
-def average_model():
+def average_model_CD():
     global Psi_model
-    global X
     Psi_model = np.zeros((L*L,q*q))
-    X = np.random.choice(q,L) 
+    global X 
+    fname_in = "test_training_data_L"+str(L)+".dat"
+    fin = open(fname_in, "r")
     
-    for t in range(T_equil):
-        MonteCarlo_sweep()
-    acceptances = 0
-    for t in range(T_relax*M):
-        acceptances += MonteCarlo_sweep()
-        if(t%T_relax == 0):
+    l = 0 
+    for line in fin:
+        item = line.split(' ')
+        del item[-1]
+        X = np.copy(map(int, item))
+        
+        for k in range(K):
+            MonteCarlo_sweep() # n state to n state.
             for i in range(L):
                 for j in range(i+1,L):
                     a, b =  X[i],X[j] 
-                    Psi_model[i*L+j][a*q+b] += 1.0/M 
-                    Psi_model[j*L+i][b*q+a] += 1.0/M
-    return acceptances
+                    Psi_model[i*L+j][a*q+b] += 1.0
+                    Psi_model[j*L+i][b*q+a] += 1.0
+        l += 1
+    Psi_model = Psi_model / l
 #----------------------------------#
 def gradient_descent():
     error = .0
@@ -145,7 +152,7 @@ def visualize_estimator():
     plt.show()
 
 def outputestimator():
-    fname = "J_model_estimator_L"+str(L)+".dat"
+    fname = "J_model_estimator_L"+str(L)+"_CD"+str(K)+".dat"
     f = open(fname, "w")
     J_model_vec = np.reshape( np.copy(J), q**2*L**2)
     for l in range(len(J_model_vec)):
@@ -171,7 +178,6 @@ def J_data_init():
 
 if __name__ == "__main__":
     #-----------#
-    #J_simple_potts()    # initialize of J_data. 
     J_data_init() 
     J_model_init()
     print "J=\n", J
@@ -181,12 +187,11 @@ if __name__ == "__main__":
     #-----------#
     time_start = time.time()
     for t in range(30):
-        average_model() 
+        average_model_CD() 
         error = gradient_descent()
         print t, error
-    #-----------#
     time_end = time.time()
     dtime = time_end - time_start
-    print "#ML: computational time = ", dtime
-
+    print "#CD1: computational time = ", dtime
+    #-----------#
     outputestimator()
