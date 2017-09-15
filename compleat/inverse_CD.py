@@ -113,11 +113,11 @@ def average_model_CD():
         
         for k in range(K):
             MonteCarlo_sweep() # n state to n state.
-            for i in range(L):
-                for j in range(i+1,L):
-                    a, b =  X[i],X[j] 
-                    Psi_model[i*L+j][a*q+b] += 1.0
-                    Psi_model[j*L+i][b*q+a] += 1.0
+        for i in range(L):
+            for j in range(i+1,L):
+                a, b =  X[i],X[j] 
+                Psi_model[i*L+j][a*q+b] += 1.0
+                Psi_model[j*L+i][b*q+a] += 1.0
         l += 1
     Psi_model = Psi_model / l
 #----------------------------------#
