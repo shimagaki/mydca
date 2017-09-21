@@ -8,7 +8,7 @@
 #include <iomanip>
 using namespace std;
 
-int q=3, L=5;
+int q=3, L=8;
 double J0 = 1.0;
 
 /*****************************/
@@ -16,9 +16,9 @@ vector<int> X(L,0);
 vector < vector<double> > J( L*L, vector<double>(q*q,0) );  
 vector < vector<double> > h( L, vector<double>(q,0) );  
 /*****************************/
-int T_equil = 1e5;
+int T_equil = 1e4;
 int T_interval = 1e2;
-int N_sampling = 1e4;
+int N_sampling = 1e5;
 /*****************************/
 inline double std_rand()
 {
@@ -31,18 +31,25 @@ void J_generalized_potts(){
 	for(int j=i+1;j<L;j++){
 		sum_b = 0;
 		for(int b=0;b<q;++b){
+			for(int a=0;a<q;++a){
+				r = std_rand();
+				J[i*L+j][a*q+b] = r;
+				J[j*L+i][b*q+a] = r;
+			}	
+			/*	
 			J_b_sum = 0;
 			vector<double>  J_b(q,0);  
-			
 			for(int a=0;a<q;++a){
 				r = std_rand();
 				J_b_sum += r;
 				J_b[b] = r;		
 			}
 			for(int a=0;a<q;++a){
-				J[i*L+j][a*q+b] = J_b[a] -J_b_sum/q;
-				J[j*L+i][b*q+a] = J_b[a] -J_b_sum/q;
+				J[i*L+j][a*q+b] = J_b[a];// -J_b_sum/q;
+				J[j*L+i][b*q+a] = J_b[a];// -J_b_sum/q;
 			}
+			*
+			*/
 		}}}
 	string fname = "J_data_L"+to_string(L)+"_c++.dat";
 	ofstream file(fname);
@@ -61,13 +68,15 @@ void h_generalized_potts(){
 		for(int a=0;a<q;++a){
 			r = std_rand();
 			h[i][a] = r;
-			h_sum += h[i][a];
+			//h_sum += h[i][a];
 	}}
 	// This regularization can write using vector operation.
+	/*	
 	for(int i=0;i<L;i++){
 		for(int a=0;a<q;++a){
 			h[i][a] += -h_sum/q;	
 	}}
+	*/	
 	string fname = "h_data_L"+to_string(L)+"_c++.dat";
 	ofstream file(fname);
 	for(int i=0;i<L;i++){

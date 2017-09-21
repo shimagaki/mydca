@@ -8,7 +8,7 @@
 #include <iomanip>
 using namespace std;
 
-int q=3, L=5;
+int q=3, L=8;
 double J0 = 0.5, h0 = 0.3;
 
 /*****************************/
@@ -22,13 +22,13 @@ vector < vector<double> > Psi_model( L*L, vector<double>(q*q,0) );
 vector < vector<double> > Psi_h( L, vector<double>(q,0) );  
 vector < vector<double> > Psi_model_h( L, vector<double>(q,0) );  
 
-/*****************************/
-int T_epoch = 1e3;
+/****************************/
+int T_epoch = 3e2;
 int T_equil = 1e3;
 int T_interval = 1e2;
-int N_sample = 1e4;
+int N_sample = 1e5;
 int M = 1e2 ; // number of sample of average by statistical model. 
-double lr = 0.001, lr_h = 0.001;
+double lr = 0.0001, lr_h = 0.001;
 double eps = 0.0;
 double error[2] ={0,0};
 /*****************************/
@@ -284,6 +284,10 @@ void gradient_descent(){
 			error[1] += dPsi_h*dPsi_h;
 	}}
     	error[1]= sqrt(error[1]) / (L*q);
+
+	string fname_fp = "fij-pij"+to_string(L)+"_c++.dat";
+	ofstream file_fp(fname_fp);
+
 
 }
 

@@ -7,7 +7,7 @@
 #include <iomanip>
 using namespace std;
 
-int q=3, L=5;
+int q=3, L=8;
 double J0 = 0.5, h0 = 0.3;
 int N_sample = 1e3;
 /*****************************/
@@ -79,7 +79,4 @@ bool calc_C(){
 int main(){
 	calc_C();
 }
-
-
-
 

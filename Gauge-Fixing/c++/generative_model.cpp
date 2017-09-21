@@ -8,7 +8,7 @@
 #include <iomanip>
 using namespace std;
 
-int q=3, L=5;
+int q=3, L=8;
 double J0 = 1.0;
 
 /*****************************/
@@ -30,7 +30,6 @@ inline double std_rand()
 
 bool J_init(){
 	bool flag=true;
-	//string fname_in = "J_data_L"+to_string(L)+"_c++.dat";
 	string fname_in = "J_model_estimator_L"+to_string(L)+"_c++.dat";
 	//string fname_in = "J_data_CD"+to_string(K)+"_L"+to_string(L)+"_c++.dat";
   	ifstream file(fname_in);
