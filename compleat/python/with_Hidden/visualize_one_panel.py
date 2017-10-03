@@ -14,8 +14,11 @@ def data_model():
     
     #fname_data = "Psi_im_data_pdf_CD_L"+str(L)+".dat"
     #fname_model =  "Psi_im_model_pdf_CD_L"+str(L)+".dat"
-    fname_data = "Psi_data_pdf_CD_L"+str(L)+".dat"
-    fname_model =  "Psi_model_pdf_CD_L"+str(L)+".dat"
+    #fname_data = "Psi_data_pdf_CD_L"+str(L)+".dat"
+    #fname_model =  "Psi_model_pdf_CD_L"+str(L)+".dat"
+    
+    fname_data = "Correlation_Teacher_L"+str(L)+".dat"
+    fname_model =  "Correlation_CD_L"+str(L)+"_hidden.dat"
     
     fin_data = open(fname_data,"r")
     fin_model = open(fname_model,"r")
