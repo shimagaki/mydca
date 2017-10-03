@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 #----------#
-q, L = 3, 4 
+q, L = 3, 16 
 J_data_vec = []
 J_model_vec = []
 
@@ -49,8 +49,8 @@ def J_data_J_model():
     
 def visualize_estimator():
     n_parameter = len(J_data_vec)
-    x = np.linspace(-0.015,0.15,n_parameter)
-    y = np.linspace(-0.015,0.15,n_parameter)
+    x = np.linspace(-0.03,0.03,n_parameter)
+    y = np.linspace(-0.03,0.03,n_parameter)
     plt.plot(x,y)
     plt.scatter(J_data_vec,J_model_vec)
     plt.xlabel("Cov(training)" ,size=18)

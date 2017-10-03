@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*- 
 import numpy as np
 import matplotlib.pyplot as plt
-L, q = 4, 3 
+L, q = 16, 3 
 Jmean = []
 Jmean_k = []
 

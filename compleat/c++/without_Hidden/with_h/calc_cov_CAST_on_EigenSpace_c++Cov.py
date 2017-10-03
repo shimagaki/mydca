@@ -10,58 +10,6 @@ X_mode = []
 Cov_train = []
 Cov_model = []
 
-def calc_cov():
-    global X_trai, X_mode 
-    global Cov_train, Cov_model
-    fname_training = "test_training_data_L"+str(L)+"_c++.dat"
-    #fname_model = "genmodel_data_L"+str(L)+".dat"
-    fname_model = "genmodel_data_CD_L"+str(L)+".dat"
-    f_training = open(fname_training, "r")
-    f_model = open(fname_model, "r")
-    
-    l = 0 
-    for line in f_training:
-        line = line.replace('\n','') # do not need to use 
-        item = line.split(' ')
-        del item[-1]
-        B = np.copy(map(int, item))
-        #A should be a vector, which has length L*q
-        A = np.zeros(L*q) 
-        for i in range(L):
-            r = B[i]
-            s = q*i + r
-            A[s] += 1
-
-        if(l==0):
-            X_trai = A
-        elif(l>0):
-            X_trai = np.vstack((X_trai,A))
-        l += 1
-    #NOTE this is wrong!!, each elements of a Covariant matrix are a matrix not scalar.
-    
-    Cov_train = np.cov(X_trai.T)
-    print "np.shape(Cov_train)=",np.shape(Cov_train) 
-    
-    l = 0 
-    for line in f_model:
-        line = line.replace('\n','')
-        item = line.split(' ')
-        del item[-1]
-        B = np.copy(map(int, item))
-        #A should be a vector, which has length L*q
-        A = np.zeros(L*q) 
-        for i in range(L):
-            r = B[i]
-            s = q*i + r
-            A[s] += 1
-
-        if(l==0):
-            X_mode = A
-        elif(l>0):
-            X_mode = np.vstack((X_mode,A))
-        l += 1
-    Cov_model = np.cov(X_mode.T)
-
 def set_X_cov():
     global X_trai
     global Cov_train, Cov_model
@@ -99,34 +47,54 @@ def set_X_cov():
     f_model = open(fname_model, "r")
 
     #---- Training Data -----#
-    l = 0
+    #l = 0
+    i,j=0,0; a,b=0,0;
     for line in f_training:
         line = line.replace('\n','') # do not need to use 
         item = line.split(' ')
-        var = l
+        #var = l
+        Cov_train[i*q+a][j*q+b] = float(item[0]) 
+        b += 1
+        if(b==q):
+            a += 1; b = 0
+            if(a==q):
+                j += 1; a = 0
+                if(j==L):
+                    i += 1; j = 0
+        """ 
         # (L*L,q*q).Mat => (L*q,L*q).Mat
         b = var % q; var -= b; var /= q
         a = var % q; var -= a; var /= q
         j = var % L; var -= j; var /= L
         i = var
+        """ 
 
-        Cov_train[i*q+a][j*q+b] = float(item[0])
-        l += 1
+        #Cov_train[i*q+a][j*q+b] = float(item[0])
+        #l += 1
     
     #---- Model Data -----#
-    l = 0
+    #l = 0
+    i,j=0,0; a,b=0,0;
     for line in f_model:
         line = line.replace('\n','') # do not need to use 
         item = line.split(' ')
-        var = l
+        Cov_model[i*q+a][j*q+b] = float(item[0])
+        b += 1
+        if(b==q):
+            a += 1; b = 0
+            if(a==q):
+                j += 1; a = 0
+                if(j==L):
+                    i += 1; j = 0
+        """
+        #var = l
         # (L*L,q*q).Mat => (L*q,L*q).Mat
         b = var % q; var -= b; var /= q
         a = var % q; var -= a; var /= q
         j = var % L; var -= j; var /= L
         i = var
-
-        Cov_model[i*q+a][j*q+b] = float(item[0])
         l += 1
+        """
 
 
 def plot_cov():
