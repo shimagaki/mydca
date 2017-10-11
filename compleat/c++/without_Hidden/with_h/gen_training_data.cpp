@@ -8,7 +8,7 @@
 #include <iomanip>
 using namespace std;
 
-int q=3, L=4;
+int q=3, L=16;
 double J0 = 0.3, h0 = 0.3;
 
 /*****************************/

@@ -8,7 +8,7 @@
 #include <iomanip>
 using namespace std;
 
-int q=3, L=4;
+int q=3, L=16;
 double J0 = 0.5, h0 = 0.3;
 
 /*****************************/
@@ -23,16 +23,16 @@ vector < vector<double> > Psi_h( L, vector<double>(q,0) );
 vector < vector<double> > Psi_model_h( L, vector<double>(q,0) );  
 
 /*****************************/
-int T_epoch = 1e3;
+int T_epoch = 5e2;
 int T_equil = 1e3;
 int T_interval = 1e2;
 int N_sample = 1e5;
 int M = 1e2 ; // number of sample of average by statistical model. 
-double lr = 0.01, lr_h = 0.01;
+double lr = 0.1, lr_h = 0.1;
 double eps = 0.0;
 double error[2] ={0,0};
 /*****************************/
-int K = 100;
+int K = 1;
 /*****************************/
 inline double std_rand()
 {
