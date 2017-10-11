@@ -47,7 +47,6 @@ void set_h_Xi(){
 			h[i][a] = h0 * std_rand();
 			for(int m=0;m<p;++m){
 				Xi[i*p+m][a] = Xi0 * std_rand();
-			
 	}}}
 }
 

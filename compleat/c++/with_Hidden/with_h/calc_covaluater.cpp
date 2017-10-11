@@ -42,7 +42,9 @@ bool calc_C(){
 				for(int j=i;j<L;++j){ // Take into account diagonal parts.
 					b = X[j];
 					f2[i*L+j][a*q+b] += 1.0/N_sample;
+					if(j!=i){
 					f2[j*L+i][b*q+a] += 1.0/N_sample;
+					}
 		}}}
 			count += 1;
 		}
